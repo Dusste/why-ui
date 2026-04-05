@@ -469,12 +469,12 @@ autocomplete args =
         [ Html.div
             [ HA.class <|
                 "absolute left-[5px] "
-                    -- TODO find better solution for this
-                    ++ (if List.isEmpty args.errors then
-                            "bottom-[6px] z-[1]"
+                    ++ (case args.placeholder of
+                            InputField.Placeholder _ ->
+                                "top-[12px] z-[1]"
 
-                        else
-                            "bottom-[32px] z-[1]"
+                            _ ->
+                                "top-[31px] z-[1]"
                        )
             ]
             [ Icon.search "bg-sky-400" Icon.Large ]
