@@ -1,0 +1,3 @@
+[submodule "packages/elm-validation"]
+	path = packages/elm-validation
+	url = https://github.com/Dusste/elm-validation
