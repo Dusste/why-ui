@@ -750,7 +750,7 @@ pagination config =
         , Html.div
             [ HA.class "flex align-center" ]
             [ Html.select
-                [ HA.class "cursor-pointer border border-gray-200 text-sky-400 rounded ml-2"
+                [ HA.class "cursor-pointer border border-gray-200 text-sky-500 rounded ml-2"
                 , HE.onInput <|
                     String.toInt
                         >> Maybe.withDefault config.pageSize

@@ -413,6 +413,7 @@ iconSizeReference =
         ]
 
 
+
 view : Model -> Html Msg
 view model =
     Html.div
@@ -1152,6 +1153,7 @@ view model =
                     , ( "Icon.expand", Icon.expand "" )
                     , ( "Icon.reload", Icon.reload "" )
                     , ( "Icon.pin", Icon.pin "" )
+                    , ( "Icon.bell", Icon.bell "" Icon.Medium )
                     ]
                 , iconGridSection "Svg · fill (or stroke) and size"
                     [ ( "Icon.assessment", Icon.assessment "" Icon.Medium )
