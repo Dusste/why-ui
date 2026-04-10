@@ -455,13 +455,22 @@ type alias AutocompleteArgs msg item =
     , filterListCondition :
         item
         -> Bool -- filter list items by some other conditional logic (e.g. filter by name or email)
-    , onClick : String -> msg
+    , onClick : item -> msg
     , itemLabel : item -> String
     }
 
 
 autocomplete : AutocompleteArgs msg item -> Html msg
 autocomplete args =
+    let
+        hasOptionsAfterFilter : Bool
+        hasOptionsAfterFilter =
+            args.options
+                |> List.filter
+                    (\item -> args.filterListCondition item)
+                |> List.isEmpty
+                |> not
+    in
     Html.div
         [ HA.class "relative flex flex-col"
         , HA.id args.id
@@ -471,7 +480,7 @@ autocomplete args =
                 "absolute left-[5px] "
                     ++ (case args.placeholder of
                             InputField.Placeholder _ ->
-                                "top-[12px] z-[1]"
+                                "top-[8px] z-[1]"
 
                             _ ->
                                 "top-[31px] z-[1]"
@@ -486,36 +495,37 @@ autocomplete args =
             |> InputField.withError args.errors
             |> InputField.withExtraText args.placeholder
             |> InputField.toHtml
-        , Html.ul
-            [ HA.class <|
-                "flex flex-col gap-2 text-gray-500 rounded-b-lg gap-y-[1px] absolute left-0 w-full bg-gray-100 border border-gray-100 z-[1] overflow-hidden "
-                    ++ (case args.placeholder of
-                            InputField.Placeholder _ ->
-                                "top-[38px]"
+        , Html.Extra.viewIf hasOptionsAfterFilter <|
+            Html.ul
+                [ HA.class <|
+                    "flex flex-col gap-2 text-gray-500 rounded-b gap-y-[1px] absolute left-0 w-full bg-gray-100 border border-gray-100 z-[2] overflow-hidden "
+                        ++ (case args.placeholder of
+                                InputField.Placeholder _ ->
+                                    "top-[38px]"
 
-                            _ ->
-                                "top-[62px]"
-                       )
-            , HA.style "display"
-                (if args.showList && List.isEmpty args.errors then
-                    "flex"
+                                _ ->
+                                    "top-[62px]"
+                           )
+                , HA.style "display"
+                    (if args.showList && List.isEmpty args.errors then
+                        "flex"
 
-                 else
-                    "none"
-                )
-            ]
-            (args.options
-                |> List.filter
-                    (\item -> args.filterListCondition item)
-                |> List.map
-                    (\item ->
-                        Html.li
-                            [ HA.class "cursor-pointer bg-white text-sm py-1 px-2 cursor-pointer hover:bg-gray-100"
-                            , HE.onClick (args.onClick (args.itemLabel item))
-                            ]
-                            [ Html.text (args.itemLabel item) ]
+                     else
+                        "none"
                     )
-            )
+                ]
+                (args.options
+                    |> List.filter
+                        (\item -> args.filterListCondition item)
+                    |> List.map
+                        (\item ->
+                            Html.li
+                                [ HA.class "cursor-pointer bg-white text-sm py-1 px-2 cursor-pointer hover:bg-gray-100"
+                                , HE.onClick (args.onClick item)
+                                ]
+                                [ Html.text (args.itemLabel item) ]
+                        )
+                )
         ]
 
 
@@ -655,7 +665,7 @@ notificationIconStyle color =
 
 notificationWrapperStyle : String -> String
 notificationWrapperStyle color =
-    "absolute gap-1 flex whitespace-nowrap border text-lg items-center px-3 py-2 items-center border-" ++ color ++ "-300 bg-" ++ color ++ "-200 text-" ++ color ++ "-500"
+    "absolute z-[5] gap-1 flex whitespace-nowrap border text-lg items-center px-3 py-2 items-center border-" ++ color ++ "-300 bg-" ++ color ++ "-200 text-" ++ color ++ "-500"
 
 
 switch : (Bool -> msg) -> Bool -> Html msg
@@ -874,7 +884,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
                         ]
                 )
             |> Html.ul
-                [ HA.class "flex flex-col gap-2 text-gray-500 rounded-b-lg gap-y-[1px] absolute top-[38px] left-0 w-full bg-gray-100 border border-gray-100 z-[1]"
+                [ HA.class "flex flex-col gap-2 text-gray-500 rounded-b gap-y-[1px] absolute top-[38px] left-0 w-full bg-gray-100 border border-gray-100 z-[1]"
                 , HA.style "display"
                     (if isOpened then
                         "flex"

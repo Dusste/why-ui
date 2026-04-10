@@ -376,7 +376,7 @@ inputFieldError txt =
 
 inputTextStyle : String
 inputTextStyle =
-    "py-2 px-2 text-gray-500 block w-full rounded bg-white dark:bg-slate-700 text-sm border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-400 placeholder:text-gray-400"
+    "py-2 px-2 text-gray-500 block w-full rounded bg-white dark:bg-slate-700 text-sm border border-gray-300 focus:outline-none focus:ring-0 focus:border-gray-400 placeholder:text-gray-300"
 
 
 inputTextNegativeStyle : String
