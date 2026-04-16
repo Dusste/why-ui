@@ -1154,6 +1154,8 @@ view model =
                     , ( "Icon.reload", Icon.reload "" )
                     , ( "Icon.pin", Icon.pin "" )
                     , ( "Icon.bell", Icon.bell "" Icon.Medium )
+                    , ( "Icon.at", Icon.at "" Icon.Medium )
+                    , ( "Icon.file", Icon.file "" Icon.Medium )
                     ]
                 , iconGridSection "Svg · fill (or stroke) and size"
                     [ ( "Icon.assessment", Icon.assessment "" Icon.Medium )

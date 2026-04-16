@@ -9,11 +9,11 @@ import Svg.Events
 
 
 type Size
-    = XSmall
-    | Small
-    | Medium
-    | Large
-    | XLarge
+    = XSmall -- 10px
+    | Small -- 15px
+    | Medium -- 20px
+    | Large -- 24px
+    | XLarge -- 50px
 
 
 sizeToString : Size -> String
@@ -776,17 +776,27 @@ attach overrideColor size =
         ]
 
 
-defaultUser : Html.Html msg
-defaultUser =
+defaultUser : String -> Size -> Html.Html msg
+defaultUser overrideColor size =
     Svg.svg
         [ SA.viewBox "0 0 24 24"
-        , SA.width "24px"
-        , SA.height "24px"
-        , SA.fill "currentColor"
+        , SA.width <| sizeToString size ++ "px"
+        , SA.height <| sizeToString size ++ "px"
+        , SA.fill <|
+            if overrideColor == "" then
+                "currentColor"
+
+            else
+                tailwindColorToColor overrideColor
         ]
         [ Svg.path
             [ SA.d "M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-            , SA.stroke "currentColor"
+            , SA.stroke <|
+                if overrideColor == "" then
+                    "currentColor"
+
+                else
+                    tailwindColorToColor overrideColor
             , SA.strokeWidth "2"
             , SA.strokeLinecap "round"
             , SA.strokeLinejoin "round"
@@ -794,7 +804,12 @@ defaultUser =
             []
         , Svg.path
             [ SA.d "M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
-            , SA.stroke "currentColor"
+            , SA.stroke <|
+                if overrideColor == "" then
+                    "currentColor"
+
+                else
+                    tailwindColorToColor overrideColor
             , SA.strokeWidth "2"
             , SA.strokeLinecap "round"
             , SA.strokeLinejoin "round"
@@ -1388,6 +1403,30 @@ at fill size =
         ]
         [ Svg.path
             [ SA.d "M17.4009 19.2C15.8965 20.3302 14.0265 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C16.9706 3 21 7.02944 21 12V13.5C21 14.8807 19.8807 16 18.5 16C17.1193 16 16 14.8807 16 13.5V8M16 12C16 14.2091 14.2091 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8C14.2091 8 16 9.79086 16 12Z"
+            , SA.stroke <|
+                if fill == "" then
+                    "currentColor"
+
+                else
+                    tailwindColorToColor fill
+            , SA.strokeWidth "2"
+            , SA.strokeLinecap "round"
+            , SA.strokeLinejoin "round"
+            ]
+            []
+        ]
+
+
+file : String -> Size -> Svg msg
+file fill size =
+    Svg.svg
+        [ SA.width <| sizeToString size ++ "px"
+        , SA.height <| sizeToString size ++ "px"
+        , SA.viewBox "0 0 24 24"
+        , SA.fill "none"
+        ]
+        [ Svg.path
+            [ SA.d "M19 9V17.8C19 18.9201 19 19.4802 18.782 19.908C18.5903 20.2843 18.2843 20.5903 17.908 20.782C17.4802 21 16.9201 21 15.8 21H8.2C7.07989 21 6.51984 21 6.09202 20.782C5.71569 20.5903 5.40973 20.2843 5.21799 19.908C5 19.4802 5 18.9201 5 17.8V6.2C5 5.07989 5 4.51984 5.21799 4.09202C5.40973 3.71569 5.71569 3.40973 6.09202 3.21799C6.51984 3 7.0799 3 8.2 3H13M19 9L13 3M19 9H14C13.4477 9 13 8.55228 13 8V3"
             , SA.stroke <|
                 if fill == "" then
                     "currentColor"

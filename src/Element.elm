@@ -884,7 +884,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
                         ]
                 )
             |> Html.ul
-                [ HA.class "flex flex-col gap-2 text-gray-500 rounded-b gap-y-[1px] absolute top-[38px] left-0 w-full bg-gray-100 border border-gray-100 z-[1]"
+                [ HA.class "flex flex-col gap-2 text-gray-500 rounded-b gap-y-[1px] absolute top-[38px] left-0 w-full bg-gray-100 border border-gray-100 z-[2]"
                 , HA.style "display"
                     (if isOpened then
                         "flex"
