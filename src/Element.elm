@@ -760,7 +760,7 @@ pagination config =
         , Html.div
             [ HA.class "flex align-center" ]
             [ Html.select
-                [ HA.class "cursor-pointer border border-gray-200 text-sky-500 rounded ml-2"
+                [ HA.class "cursor-pointer h-[28px] border border-gray-200 text-sky-500 rounded ml-2"
                 , HE.onInput <|
                     String.toInt
                         >> Maybe.withDefault config.pageSize
@@ -1161,7 +1161,7 @@ type alias ModalArgs msg =
 viewModal : ModalArgs msg -> Html msg
 viewModal { size, title, children, onClose } =
     Html.div
-        [ HA.class "flex items-center justify-center max-h-[100%] max-w-[100%] h-[100%] w-[100%] fixed top-[0] left-[0] z-[2] before:content-[''] before:fixed before:inset-0 before:w-full before:h-full before:bg-black/50 before:backdrop-blur-[2px] before:transition-all before:duration-500 before:z-1"
+        [ HA.class "flex items-center justify-center max-h-[100%] max-w-[100%] h-[100%] w-[100%] fixed top-[0] left-[0] z-[2] before:content-[''] before:fixed before:inset-0 before:w-full before:h-full before:bg-black/50 before:backdrop-blur-[2px] before:transition-all before:duration-500 before:z-[1]"
         ]
         [ Html.div
             [ HA.id "modal"
