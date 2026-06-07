@@ -923,7 +923,7 @@ basicTable { th, td } =
                     (List.map
                         (\th_ ->
                             Html.th
-                                [ HA.class "bg-gray-100 py-[6px] px-[8px]" ]
+                                [ HA.class "bg-gray-100 py-[6px] px-[8px] whitespace-nowrap" ]
                                 [ Html.text th_ ]
                         )
                         th
@@ -1203,7 +1203,16 @@ viewModal { size, title, children, onClose } =
                         Html.text ""
                 ]
             , Html.div
-                [ HA.class "overflow-y-auto max-h-[80vh] min-h-[200px]" ]
+                [ HA.class <|
+                    "overflow-y-auto max-h-[80vh] "
+                        ++ (case size of
+                                XL ->
+                                    "min-h-[800px]"
+
+                                _ ->
+                                    "min-h-[200px]"
+                           )
+                ]
                 [ children ]
             ]
         ]

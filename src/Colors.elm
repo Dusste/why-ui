@@ -31,6 +31,9 @@ tailwindColorToColor color =
         "bg-red-400" ->
             "rgb(248 113 113)"
 
+        "bg-red-500" ->
+            "rgb(239 68 68)"
+
         "bg-sky-200" ->
             "rgb(14 165 233)"
 

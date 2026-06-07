@@ -381,9 +381,9 @@ inputTextStyle =
 
 inputTextNegativeStyle : String
 inputTextNegativeStyle =
-    "py-2 px-3 border border-red-500 rounded bg-red-100 block w-full text-sm text-red-500 focus:outline-none focus:ring-0 focus:border-gray-400"
+    "py-2 px-2 border border-red-500 rounded bg-red-100 block w-full text-sm text-red-500 focus:outline-none focus:ring-0 focus:border-gray-400"
 
 
 inputTextDisabledStyle : String
 inputTextDisabledStyle =
-    "py-2 px-3 cursor-disabled rounded bg-slate-100 border border-slate-100 dark:text-white dark:bg-slate-700 block w-full text-sm text-gray-500 focus:border-gray-300 focus:border-gray-300 focus:ring-gray-500"
+    "py-2 px-2 cursor-disabled rounded bg-slate-100 border border-slate-100 dark:text-white dark:bg-slate-700 block w-full text-sm text-gray-500 focus:border-gray-300 focus:border-gray-300 focus:ring-gray-500"
