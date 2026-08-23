@@ -4,6 +4,22 @@ export default {
   content: ["./src/**/*.{elm,html,js,ts}", "./examples/**/*.{elm,html,js,ts}"],
   theme: {
     extend: {
+      colors: {
+        // Venkelt primary — replaces former sky-* accent usage
+        brand: {
+          DEFAULT: "#5B2A86",
+          50: "#F2EEF5",
+          100: "#E6DFED",
+          200: "#CEBFDB",
+          300: "#A58ABC",
+          400: "#5B2A86",
+          500: "#502576",
+          600: "#421E60",
+          700: "#35184E",
+          800: "#29133C",
+          900: "#1D0D2B",
+        },
+      },
       animation: {
         "move-left": "move-left 500ms ease-in-out 4s forwards",
         "move-right": "move-right 500ms ease-in-out 4s forwards",
