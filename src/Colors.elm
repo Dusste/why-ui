@@ -34,17 +34,17 @@ tailwindColorToColor color =
         "bg-red-500" ->
             "rgb(239 68 68)"
 
-        "bg-sky-200" ->
-            "rgb(14 165 233)"
+        "bg-brand-200" ->
+            "rgb(206 191 219)"
 
-        "bg-sky-100" ->
-            "rgb(209 213 219)"
+        "bg-brand-100" ->
+            "rgb(230 223 237)"
 
-        "bg-sky-500" ->
-            "rgb(14 165 233)"
+        "bg-brand-500" ->
+            "rgb(80 37 118)"
 
-        "bg-sky-400" ->
-            "rgb(14 165 233)"
+        "bg-brand-400" ->
+            "rgb(91 42 134)"
 
         "bg-white" ->
             "rgb(255 255 255)"

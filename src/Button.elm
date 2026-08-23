@@ -264,13 +264,13 @@ sizeToStyle size =
 
 buttonPrimaryStyle : Maybe Size -> String
 buttonPrimaryStyle size =
-    "justify-self-start whitespace-nowrap w-fit flex-start bg-sky-400 border rounded border-sky-400 text-white transition-all hover:bg-sky-600 hover:border-sky-600"
+    "justify-self-start whitespace-nowrap w-fit flex-start bg-brand-400 border rounded border-brand-400 text-white transition-all hover:bg-brand-600 hover:border-brand-600"
         ++ sizeToStyle size
 
 
 buttonSecondaryStyle : Maybe Size -> String
 buttonSecondaryStyle size =
-    "justify-self-start whitespace-nowrap w-fit flex-start bg-white border border-gray-200 rounded text-sky-500 transition-all hover:bg-gray-50"
+    "justify-self-start whitespace-nowrap w-fit flex-start bg-white border border-gray-200 rounded text-brand-500 transition-all hover:bg-gray-50"
         ++ sizeToStyle size
 
 
@@ -288,7 +288,7 @@ buttonDisabledStyle size =
 
 buttonLinkStyle : Maybe Size -> String
 buttonLinkStyle size =
-    "w-fit whitespace-nowrap text-sky-500 dark:text-white transition-all hover:text-sky-600 dark:hover:text-gray-300"
+    "w-fit whitespace-nowrap text-brand-500 dark:text-white transition-all hover:text-brand-600 dark:hover:text-gray-300"
         ++ " cursor-pointer"
 
 
@@ -341,7 +341,7 @@ viewTabs field toMsg lstOfTabs selectedTab errors =
                                         " border border-transparent"
                                    )
                         , HEE.onClickPreventDefault (toMsg (String.Extra.classify tab_))
-                        , HA.classList [ ( "bg-sky-400 text-white hover:bg-sky-400 hover:text-white", selectedTab_ == Just tab_ ) ]
+                        , HA.classList [ ( "bg-brand-400 text-white hover:bg-brand-400 hover:text-white", selectedTab_ == Just tab_ ) ]
                         ]
                         [ Html.text tab ]
                 )

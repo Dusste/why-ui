@@ -354,7 +354,7 @@ isPlaceholder label =
 
 eyeClosedStyle : String
 eyeClosedStyle =
-    " before:content-[''] before:block before:absolute before:w-[25px] before:h-[1px] before:bg-sky-300 before:rotate-[45deg] before:top-[12px] before:cursor-pointer"
+    " before:content-[''] before:block before:absolute before:w-[25px] before:h-[1px] before:bg-brand-300 before:rotate-[45deg] before:top-[12px] before:cursor-pointer"
 
 
 eyeClosedWrapperStyle : String

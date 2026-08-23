@@ -45,7 +45,7 @@ preselectedMultiselect args =
         viewOption : String -> Html msg
         viewOption str =
             Html.div
-                [ HA.class "text-sm px-3 py-1 rounded cursor-pointer border transition-all duration-150 bg-sky-500 text-white border-sky-500"
+                [ HA.class "text-sm px-3 py-1 rounded cursor-pointer border transition-all duration-150 bg-brand-500 text-white border-brand-500"
                 , HE.onClick (toggleSelection str)
                 ]
                 [ Html.text str
@@ -118,10 +118,10 @@ multiselect args =
                 baseClasses =
                     "text-sm px-3 py-1 rounded cursor-pointer border transition-all duration-150 "
                         ++ (if selected then
-                                "bg-sky-500 text-white border-sky-500"
+                                "bg-brand-500 text-white border-brand-500"
 
                             else
-                                "bg-gray-100 text-gray-500 hover:bg-sky-100 border-gray-300"
+                                "bg-gray-100 text-gray-500 hover:bg-brand-100 border-gray-300"
                            )
             in
             Html.div
@@ -216,10 +216,10 @@ singleselect args =
                 baseClasses =
                     "text-sm px-3 py-1 rounded cursor-pointer border transition-all duration-150 "
                         ++ (if selected then
-                                "bg-sky-500 text-white border-sky-500"
+                                "bg-brand-500 text-white border-brand-500"
 
                             else
-                                "bg-gray-100 text-gray-500 hover:bg-sky-100 border-gray-300"
+                                "bg-gray-100 text-gray-500 hover:bg-brand-100 border-gray-300"
                            )
             in
             Html.div
@@ -252,7 +252,7 @@ styleshCheckbox toMsg checked =
         [ HA.class "flex items-center"
         ]
         [ Html.input
-            [ HA.class "appearance-none w-4 h-4 border-2 border-gray-200 bg-white checked:bg-sky-100 checked:border-sky-400 focus:outline-none focus:ring-2 focus:ring-sky-100 focus:ring-offset-2 cursor-pointer transition-all duration-200 hover:border-gray-200"
+            [ HA.class "appearance-none w-4 h-4 border-2 border-gray-200 bg-white checked:bg-brand-100 checked:border-brand-400 focus:outline-none focus:ring-2 focus:ring-brand-100 focus:ring-offset-2 cursor-pointer transition-all duration-200 hover:border-gray-200"
             , HA.type_ "checkbox"
             , HE.onCheck toMsg
             , HA.checked checked
@@ -314,7 +314,7 @@ textarea { id, label, value, limit, toMsg, isDisabled, error } =
                                         " text-orange-400"
 
                                     else
-                                        "text-sky-500"
+                                        "text-brand-500"
                                    )
                         ]
                         [ Html.text <|
@@ -412,7 +412,7 @@ checkbox label toMsg checked =
         [ Html.div
             [ HA.class "relative flex items-center" ]
             [ Html.input
-                [ HA.class "appearance-none w-4 h-4 border-2 border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-sky-200 focus:ring-offset-1 cursor-pointer transition-all duration-200 hover:border-gray-400 rounded-sm"
+                [ HA.class "appearance-none w-4 h-4 border-2 border-gray-300 bg-white focus:outline-none focus:ring-2 focus:ring-brand-200 focus:ring-offset-1 cursor-pointer transition-all duration-200 hover:border-gray-400 rounded-sm"
                 , HA.type_ "checkbox"
                 , HE.onCheck toMsg
                 , HA.checked checked
@@ -424,7 +424,7 @@ checkbox label toMsg checked =
                 ]
                 [ Html.div
                     [ HA.class <|
-                        "w-2 h-2 text-sky-500 flex items-center justify-center transition-opacity duration-200 text-[20px] "
+                        "w-2 h-2 text-brand-500 flex items-center justify-center transition-opacity duration-200 text-[20px] "
                             ++ (if checked then
                                     "opacity-100"
 
@@ -486,7 +486,7 @@ autocomplete args =
                                 "top-[31px] z-[1]"
                        )
             ]
-            [ Icon.search "bg-sky-400" Icon.Large ]
+            [ Icon.search "bg-brand-400" Icon.Large ]
         , InputField.view
             |> InputField.withValue args.value
             |> InputField.withMsg args.toMsg
@@ -539,7 +539,7 @@ formLayout head children =
     Html.div
         [ HA.class "flex justify-center mt-32" ]
         [ Html.div
-            [ HA.class "flex flex-col w-[380px] py-[2px] rounded items-center bg-gradient-to-l from-sky-200" ]
+            [ HA.class "flex flex-col w-[380px] py-[2px] rounded items-center bg-gradient-to-l from-brand-200" ]
             [ Html.div
                 [ HA.class "flex flex-col w-[376px] rounded gap-y-4 bg-white dark:bg-black py-10 px-8" ]
                 [ Html.h2
@@ -561,11 +561,11 @@ loadingElement =
             [ HA.class "relative h-[20px] w-[20px] flex"
             ]
             [ Html.span
-                [ HA.class "animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"
+                [ HA.class "animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"
                 ]
                 []
             , Html.span
-                [ HA.class "relative inline-flex rounded-full h-[20px] w-[20px] bg-sky-500" ]
+                [ HA.class "relative inline-flex rounded-full h-[20px] w-[20px] bg-brand-500" ]
                 []
             ]
         ]
@@ -760,7 +760,7 @@ pagination config =
         , Html.div
             [ HA.class "flex align-center" ]
             [ Html.select
-                [ HA.class "cursor-pointer h-[28px] border border-gray-200 text-sky-500 rounded ml-2"
+                [ HA.class "cursor-pointer h-[28px] border border-gray-200 text-brand-500 rounded ml-2"
                 , HE.onInput <|
                     String.toInt
                         >> Maybe.withDefault config.pageSize
@@ -820,7 +820,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
                             " border border-red-500 bg-red-100 text-red-500 hover:bg-red-100"
 
                         else
-                            " border border-sky-400 text-sky-400 bg-sky-400/5"
+                            " border border-brand-400 text-brand-400 bg-brand-400/5"
                        )
 
             -- ++ (if selected /= Nothing then
@@ -831,7 +831,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
             -- ++ (if hasError then
             --         " border border-red-500 bg-red-100 text-red-500"
             --     else
-            --         " border border-sky-400 text-sky-400 bg-sky-400/5"
+            --         " border border-brand-400 text-brand-400 bg-brand-400/5"
             --    )
             ]
             [ Html.span
@@ -873,7 +873,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
                         [ HA.class <|
                             style index
                                 ++ (if selectedToCamelCase == strToCamelCase then
-                                        " bg-sky-400 text-white hover:text-white hover:bg-sky-400"
+                                        " bg-brand-400 text-white hover:text-white hover:bg-brand-400"
 
                                     else
                                         " bg-white"
