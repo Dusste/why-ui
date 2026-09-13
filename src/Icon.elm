@@ -471,6 +471,54 @@ arrowUp =
         ]
 
 
+trendUp : String -> Size -> Html.Html msg
+trendUp stroke size =
+    Svg.svg
+        [ SA.viewBox "0 0 24 24"
+        , SA.fill "none"
+        , SA.width <| sizeToString size ++ "px"
+        , SA.height <| sizeToString size ++ "px"
+        ]
+        [ Svg.path
+            [ SA.d "M16 7h6v6M22 7l-8.5 8.5-5-5L2 17"
+            , SA.stroke <|
+                if stroke == "" then
+                    "currentColor"
+
+                else
+                    tailwindColorToColor stroke
+            , SA.strokeWidth "2"
+            , SA.strokeLinecap "round"
+            , SA.strokeLinejoin "round"
+            ]
+            []
+        ]
+
+
+trendDown : String -> Size -> Html.Html msg
+trendDown stroke size =
+    Svg.svg
+        [ SA.viewBox "0 0 24 24"
+        , SA.fill "none"
+        , SA.width <| sizeToString size ++ "px"
+        , SA.height <| sizeToString size ++ "px"
+        ]
+        [ Svg.path
+            [ SA.d "M16 17h6v-6M22 17l-8.5-8.5-5 5L2 7"
+            , SA.stroke <|
+                if stroke == "" then
+                    "currentColor"
+
+                else
+                    tailwindColorToColor stroke
+            , SA.strokeWidth "2"
+            , SA.strokeLinecap "round"
+            , SA.strokeLinejoin "round"
+            ]
+            []
+        ]
+
+
 arrowLeft : Html.Html msg
 arrowLeft =
     Svg.svg
