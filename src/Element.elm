@@ -873,7 +873,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
                         [ HA.class <|
                             style index
                                 ++ (if selectedToCamelCase == strToCamelCase then
-                                        " bg-brand-400 text-white hover:text-white hover:bg-brand-400"
+                                        " bg-brand-400 text-white hover:text-white hover:bg-brand-600"
 
                                     else
                                         " bg-white hover:bg-gray-100"
