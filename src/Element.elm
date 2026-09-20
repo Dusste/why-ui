@@ -795,13 +795,13 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
         style : Int -> String
         style i =
             if i == 0 then
-                "text-sm py-1 px-2 cursor-pointer hover:bg-gray-100"
+                "text-sm py-1 px-2 cursor-pointer"
 
             else if i == List.length lst - 1 then
-                "text-sm py-1 px-2 cursor-pointer rounded-b hover:bg-gray-100"
+                "text-sm py-1 px-2 cursor-pointer rounded-b"
 
             else
-                "text-sm py-1 px-2 cursor-pointer hover:bg-gray-100"
+                "text-sm py-1 px-2 cursor-pointer"
     in
     Html.div
         [ HA.class "relative flex flex-col rounded min-w-[150px]"
@@ -876,7 +876,7 @@ dropdown { label, field, toggleMsg, lst, isOpened, toMsg, selected, errors } =
                                         " bg-brand-400 text-white hover:text-white hover:bg-brand-400"
 
                                     else
-                                        " bg-white"
+                                        " bg-white hover:bg-gray-100"
                                    )
                         , HE.onClick <| toMsg <| String.Extra.humanize strToCamelCase
                         ]

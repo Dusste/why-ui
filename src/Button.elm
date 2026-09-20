@@ -332,7 +332,7 @@ viewTabs field toMsg lstOfTabs selectedTab errors =
                     in
                     Html.button
                         [ HA.class <|
-                            "bg-gray-200 text-sm text-gray-500 py-2 px-3 bg-gray-200 text-sm text-gray-500 "
+                            "text-sm text-gray-500 py-2 px-3 text-sm text-gray-500 "
                                 ++ overrideStyle index
                                 ++ (if hasError then
                                         " border border-red-500 bg-red-100 text-red-500"
@@ -341,7 +341,8 @@ viewTabs field toMsg lstOfTabs selectedTab errors =
                                         " border border-transparent"
                                    )
                         , HEE.onClickPreventDefault (toMsg (String.Extra.classify tab_))
-                        , HA.classList [ ( "bg-brand-400 text-white hover:bg-brand-400 hover:text-white", selectedTab_ == Just tab_ ) ]
+                        , HA.classList [ ( "bg-brand-400 text-white hover:bg-brand-600 hover:text-white", selectedTab_ == Just tab_ ) ]
+                        , HA.classList [ ( "bg-gray-200", selectedTab_ /= Just tab_ ) ]
                         ]
                         [ Html.text tab ]
                 )
