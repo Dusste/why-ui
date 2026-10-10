@@ -46,6 +46,12 @@ tailwindColorToColor color =
         "bg-brand-400" ->
             "rgb(91 42 134)"
 
+        "bg-brand-300" ->
+            "rgb(117 58 168)"
+
+        "text-brand-300" ->
+            "rgb(117 58 168)"
+
         "bg-white" ->
             "rgb(255 255 255)"
 

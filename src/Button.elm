@@ -288,7 +288,7 @@ buttonDisabledStyle size =
 
 buttonLinkStyle : Maybe Size -> String
 buttonLinkStyle size =
-    "w-fit whitespace-nowrap text-brand-500 dark:text-white transition-all hover:text-brand-600 dark:hover:text-gray-300"
+    "w-fit whitespace-nowrap text-brand-300 dark:text-white transition-all hover:text-brand-600 dark:hover:text-gray-300"
         ++ " cursor-pointer"
 
 
