@@ -264,7 +264,7 @@ sizeToStyle size =
 
 buttonPrimaryStyle : Maybe Size -> String
 buttonPrimaryStyle size =
-    "justify-self-start whitespace-nowrap w-fit flex-start bg-brand-400 border rounded border-brand-400 text-white transition-all hover:bg-brand-600 hover:border-brand-600"
+    "justify-self-start whitespace-nowrap w-fit flex-start bg-brand-300 border rounded border-brand-400 text-white transition-all hover:bg-brand-600 hover:border-brand-500"
         ++ sizeToStyle size
 
 
