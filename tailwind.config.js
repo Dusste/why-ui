@@ -8,10 +8,10 @@ export default {
         // Venkelt primary — replaces former sky-* accent usage
         brand: {
           DEFAULT: "#5B2A86",
-          50: "#F2EEF5",
-          100: "#E6DFED",
-          200: "#CEBFDB",
-          300: "#A58ABC",
+          50: "#E6DFED",
+          100: "#CEBFDB",
+          200: "#A58ABC",
+          300: "#753aa8",
           400: "#5B2A86",
           500: "#502576",
           600: "#421E60",
