@@ -556,16 +556,36 @@ formLayout head children =
 loadingElement : Html msg
 loadingElement =
     Html.div
-        [ HA.class "flex justify-center items-center w-full" ]
-        [ Html.div
-            [ HA.class "relative h-[20px] w-[20px] flex"
+        [ HA.class "flex justify-center items-center w-full h-full"
+        , HA.attribute "role" "status"
+        , HA.attribute "aria-label" "Loading"
+        ]
+        [ Svg.svg
+            [ SA.class "h-8 w-8 animate-spin motion-reduce:animate-none [animation-duration:1.2s]"
+            , SA.viewBox "0 0 40 40"
+            , SA.fill "none"
+            , HA.attribute "aria-hidden" "true"
             ]
-            [ Html.span
-                [ HA.class "animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-400 opacity-75"
+            [ Svg.circle
+                [ SA.class "text-brand-100 dark:text-brand-800"
+                , SA.cx "20"
+                , SA.cy "20"
+                , SA.r "16"
+                , SA.stroke "currentColor"
+                , SA.strokeWidth "4"
                 ]
                 []
-            , Html.span
-                [ HA.class "relative inline-flex rounded-full h-[20px] w-[20px] bg-brand-500" ]
+            , Svg.circle
+                [ SA.class "text-brand-400 dark:text-brand-200 animate-loader-dash motion-reduce:animate-none"
+                , SA.cx "20"
+                , SA.cy "20"
+                , SA.r "16"
+                , SA.stroke "currentColor"
+                , SA.strokeWidth "4"
+                , SA.strokeLinecap "round"
+                , SA.pathLength "100"
+                , SA.strokeDasharray "28 72"
+                ]
                 []
             ]
         ]

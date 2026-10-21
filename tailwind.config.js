@@ -24,6 +24,7 @@ export default {
         "move-left": "move-left 500ms ease-in-out 4s forwards",
         "move-right": "move-right 500ms ease-in-out 4s forwards",
         "fade-out": "fade-out 500ms ease-in-out 4s forwards",
+        "loader-dash": "loader-dash 1.4s ease-in-out infinite",
       },
       keyframes: {
         "move-left": {
@@ -37,6 +38,11 @@ export default {
         "fade-out": {
           "0%": { opacity: "1" },
           "100%": { opacity: "0" },
+        },
+        "loader-dash": {
+          "0%": { "stroke-dasharray": "1, 100", "stroke-dashoffset": "0" },
+          "50%": { "stroke-dasharray": "72, 100", "stroke-dashoffset": "-18" },
+          "100%": { "stroke-dasharray": "1, 100", "stroke-dashoffset": "-90" },
         },
       },
     },
