@@ -47,6 +47,7 @@ type alias Model =
     , users : List User
     , userAutocompleteValue : String
     , hasChoosenUser : Bool
+    , userAutocompletePhase : Element.AutocompletePhase
     , demoTabSelection : Maybe String
     , lastButtonDemoClick : Maybe String
     , preselectedMultiselectItems : List String
@@ -97,6 +98,7 @@ initialModel =
         ]
     , userAutocompleteValue = ""
     , hasChoosenUser = False
+    , userAutocompletePhase = Element.AutocompleteClosed
     , demoTabSelection = Just "AnnualReview"
     , lastButtonDemoClick = Nothing
     , preselectedMultiselectItems = [ "Elm", "Rust", "Haskell" ]
@@ -134,6 +136,7 @@ type Msg
     | SetCardExpirationValue String
     | SetCvcValue String
     | SetUserAutocompleteValue String
+    | SetUserAutocompletePhase Element.AutocompletePhase
     | ChooseUser String
     | SetDemoTab String
     | ButtonDemoClick String
@@ -232,7 +235,10 @@ update msg model =
                 resetErrorsPerField =
                     Validation.resetErrorsPerField "userAutocomplete" model.formErrors
             in
-            ( { model | userAutocompleteValue = value, formErrors = resetErrorsPerField, hasChoosenUser = False }, Cmd.none )
+            ( { model | userAutocompleteValue = value, formErrors = resetErrorsPerField, hasChoosenUser = False, userAutocompletePhase = Element.AutocompleteFilter }, Cmd.none )
+
+        SetUserAutocompletePhase phase ->
+            ( { model | userAutocompletePhase = phase }, Cmd.none )
 
         ChooseUser user ->
             let
@@ -243,6 +249,7 @@ update msg model =
             ( { model
                 | userAutocompleteValue = user
                 , hasChoosenUser = True
+                , userAutocompletePhase = Element.AutocompleteClosed
                 , formErrors = resetErrorsPerField
               }
             , Cmd.none
@@ -559,7 +566,9 @@ view model =
                         , options = model.users
                         , errors = ErrorUI.byFieldName "userAutocomplete" model.formErrors
                         , placeholder = InputField.Both "User" "User's name"
-                        , showList = (String.length model.userAutocompleteValue > 0) && not model.hasChoosenUser
+                        , phase = model.userAutocompletePhase
+                        , onFocus = SetUserAutocompletePhase Element.AutocompleteBrowse
+                        , onBlur = SetUserAutocompletePhase Element.AutocompleteClosed
                         , filterListCondition =
                             \u ->
                                 String.contains (String.toLower model.userAutocompleteValue) (String.toLower u.name)

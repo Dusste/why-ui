@@ -8,6 +8,7 @@ import Html.Events as HE
 import Html.Extra
 import Icon
 import InputField
+import Json.Decode
 import Json.Encode
 import String.Extra
 import Svg exposing (Svg)
@@ -443,6 +444,12 @@ checkbox label toMsg checked =
         ]
 
 
+type AutocompletePhase
+    = AutocompleteClosed
+    | AutocompleteBrowse
+    | AutocompleteFilter
+
+
 type alias AutocompleteArgs msg item =
     { id : String
     , value : String
@@ -451,7 +458,9 @@ type alias AutocompleteArgs msg item =
     , options : List item
     , errors : List String
     , placeholder : InputField.PlaceholderLabel
-    , showList : Bool -- show/hide autocomplete list
+    , phase : AutocompletePhase
+    , onFocus : msg
+    , onBlur : msg
     , filterListCondition :
         item
         -> Bool -- filter list items by some other conditional logic (e.g. filter by name or email)
@@ -463,13 +472,17 @@ type alias AutocompleteArgs msg item =
 autocomplete : AutocompleteArgs msg item -> Html msg
 autocomplete args =
     let
-        hasOptionsAfterFilter : Bool
-        hasOptionsAfterFilter =
-            args.options
-                |> List.filter
-                    (\item -> args.filterListCondition item)
-                |> List.isEmpty
-                |> not
+        visibleOptions : List item
+        visibleOptions =
+            case args.phase of
+                AutocompleteClosed ->
+                    []
+
+                AutocompleteBrowse ->
+                    args.options
+
+                AutocompleteFilter ->
+                    List.filter args.filterListCondition args.options
     in
     Html.div
         [ HA.class "relative flex flex-col"
@@ -494,11 +507,13 @@ autocomplete args =
             |> InputField.withDisable args.isDisabled
             |> InputField.withError args.errors
             |> InputField.withExtraText args.placeholder
+            |> InputField.withOnFocus args.onFocus
+            |> InputField.withOnBlur args.onBlur
             |> InputField.toHtml
-        , Html.Extra.viewIf hasOptionsAfterFilter <|
+        , Html.Extra.viewIf (args.phase /= AutocompleteClosed && List.isEmpty args.errors && not (List.isEmpty visibleOptions)) <|
             Html.ul
                 [ HA.class <|
-                    "flex flex-col gap-2 text-gray-500 rounded-b gap-y-[1px] absolute left-0 w-full bg-gray-100 border border-gray-100 z-[2] overflow-hidden "
+                    "flex flex-col gap-y-[1px] text-gray-500 rounded-b absolute left-0 w-full max-h-60 overflow-y-auto overscroll-contain bg-gray-100 border border-gray-100 z-[2] "
                         ++ (case args.placeholder of
                                 InputField.Placeholder _ ->
                                     "top-[38px]"
@@ -506,25 +521,17 @@ autocomplete args =
                                 _ ->
                                     "top-[62px]"
                            )
-                , HA.style "display"
-                    (if args.showList && List.isEmpty args.errors then
-                        "flex"
-
-                     else
-                        "none"
-                    )
                 ]
-                (args.options
-                    |> List.filter
-                        (\item -> args.filterListCondition item)
-                    |> List.map
-                        (\item ->
-                            Html.li
-                                [ HA.class "cursor-pointer bg-white text-sm py-1 px-2 cursor-pointer hover:bg-gray-100"
-                                , HE.onClick (args.onClick item)
-                                ]
-                                [ Html.text (args.itemLabel item) ]
-                        )
+                (List.map
+                    (\item ->
+                        Html.li
+                            [ HA.class "cursor-pointer bg-white text-sm py-1 px-2 hover:bg-gray-100"
+                            , HE.stopPropagationOn "mousedown"
+                                (Json.Decode.succeed ( args.onClick item, True ))
+                            ]
+                            [ Html.text (args.itemLabel item) ]
+                    )
+                    visibleOptions
                 )
         ]
 

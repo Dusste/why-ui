@@ -14,6 +14,8 @@ module InputField exposing
     , withError
     , withExtraText
     , withMsg
+    , withOnBlur
+    , withOnFocus
     , withType
     , withValue
     )
@@ -62,6 +64,8 @@ type InputField constraints msg
         , type_ : InputFieldType msg
         , isDisabled : Bool
         , error : List String
+        , onFocus : Maybe msg
+        , onBlur : Maybe msg
         }
 
 
@@ -75,6 +79,8 @@ view =
         , type_ = Text
         , isDisabled = False
         , error = []
+        , onFocus = Nothing
+        , onBlur = Nothing
         }
 
 
@@ -135,6 +141,16 @@ withExtraText label (InputField constraints) =
     InputField { constraints | label = label }
 
 
+withOnFocus : msg -> InputField constraints msg -> InputField constraints msg
+withOnFocus msg (InputField constraints) =
+    InputField { constraints | onFocus = Just msg }
+
+
+withOnBlur : msg -> InputField constraints msg -> InputField constraints msg
+withOnBlur msg (InputField constraints) =
+    InputField { constraints | onBlur = Just msg }
+
+
 toHtml :
     InputField
         { hasDisableState : ()
@@ -148,7 +164,7 @@ toHtml :
     -> Html msg
 toHtml (InputField constraints) =
     let
-        { label, value, toMsg, type_, isDisabled, error } =
+        { label, value, toMsg, type_, isDisabled, error, onFocus, onBlur } =
             constraints
 
         extendedInput : List (Html msg)
@@ -265,6 +281,18 @@ toHtml (InputField constraints) =
                             , case toMsg of
                                 Just toMsg_ ->
                                     [ HE.onInput toMsg_ ]
+
+                                Nothing ->
+                                    []
+                            , case onFocus of
+                                Just focusMsg ->
+                                    [ HE.onFocus focusMsg ]
+
+                                Nothing ->
+                                    []
+                            , case onBlur of
+                                Just blurMsg ->
+                                    [ HE.onBlur blurMsg ]
 
                                 Nothing ->
                                     []
