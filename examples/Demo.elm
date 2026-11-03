@@ -37,6 +37,8 @@ type alias Model =
     { zone : Time.Zone
     , now : Time.Posix
     , normalInputFieldValue : String
+    , normalInputFocused : Bool
+    , integerInputFieldValue : String
     , formErrors : Dict String (List String)
     , decimalInputFieldValue : String
     , password : String
@@ -75,6 +77,8 @@ initialModel =
     { zone = Time.utc
     , now = Time.millisToPosix 0
     , normalInputFieldValue = ""
+    , normalInputFocused = False
+    , integerInputFieldValue = ""
     , formErrors = Dict.fromList [ ( "normalInputFieldValueError", [ "Field is empty" ] ) ]
     , decimalInputFieldValue = ""
     , password = ""
@@ -129,6 +133,8 @@ type Msg
     = Tick Time.Posix
     | GotClock ( Time.Zone, Time.Posix )
     | SetNormalInputFieldValue String
+    | SetNormalInputFocused Bool
+    | SetIntegerInputFieldValue String
     | SetDecimalInputFieldValue String
     | SetPassword String
     | ShowPassword String Bool
@@ -137,7 +143,7 @@ type Msg
     | SetCvcValue String
     | SetUserAutocompleteValue String
     | SetUserAutocompletePhase Element.AutocompletePhase
-    | ChooseUser String
+    | ChooseUser User
     | SetDemoTab String
     | ButtonDemoClick String
     | SetPreselectedMultiselect (List String)
@@ -180,6 +186,17 @@ update msg model =
                     Validation.resetErrorsPerField "normalInputFieldValue" model.formErrors
             in
             ( { model | normalInputFieldValue = value, formErrors = resetErrorsPerField }, Cmd.none )
+
+        SetNormalInputFocused focused ->
+            ( { model | normalInputFocused = focused }, Cmd.none )
+
+        SetIntegerInputFieldValue value ->
+            let
+                resetErrorsPerField : Dict String (List String)
+                resetErrorsPerField =
+                    Validation.resetErrorsPerField "integerInputFieldValue" model.formErrors
+            in
+            ( { model | integerInputFieldValue = value, formErrors = resetErrorsPerField }, Cmd.none )
 
         SetDecimalInputFieldValue value ->
             let
@@ -247,7 +264,7 @@ update msg model =
                     Validation.resetErrorsPerField "userAutocomplete" model.formErrors
             in
             ( { model
-                | userAutocompleteValue = user
+                | userAutocompleteValue = user.name
                 , hasChoosenUser = True
                 , userAutocompletePhase = Element.AutocompleteClosed
                 , formErrors = resetErrorsPerField
@@ -420,7 +437,6 @@ iconSizeReference =
         ]
 
 
-
 view : Model -> Html Msg
 view model =
     Html.div
@@ -447,7 +463,20 @@ view model =
                         |> InputField.withDisable False
                         |> InputField.withError (ErrorUI.byFieldName "normalInputFieldValue" model.formErrors)
                         |> InputField.withExtraText (InputField.Both "Name" "Normal input field")
+                        |> InputField.withOnFocus (SetNormalInputFocused True)
+                        |> InputField.withOnBlur (SetNormalInputFocused False)
                         |> InputField.toHtml
+                    , Html.p
+                        [ HA.class "text-xs text-gray-500" ]
+                        [ Html.text <|
+                            "Focused: "
+                                ++ (if model.normalInputFocused then
+                                        "yes"
+
+                                    else
+                                        "no"
+                                   )
+                        ]
                     ]
                 , Html.div
                     [ HA.class "flex flex-col gap-2" ]
@@ -489,6 +518,20 @@ view model =
                         |> InputField.withDisable False
                         |> InputField.withError (ErrorUI.byFieldName "decimalInputFieldValue" model.formErrors)
                         |> InputField.withExtraText (InputField.Both "Name" "Decimal input field")
+                        |> InputField.toHtml
+                    ]
+                , Html.div
+                    [ HA.class "flex flex-col gap-2" ]
+                    [ Html.h3
+                        [ HA.class "text-lg" ]
+                        [ Html.text "Input Field integer" ]
+                    , InputField.view
+                        |> InputField.withValue model.integerInputFieldValue
+                        |> InputField.withMsg SetIntegerInputFieldValue
+                        |> InputField.withType InputField.Integer
+                        |> InputField.withDisable False
+                        |> InputField.withError (ErrorUI.byFieldName "integerInputFieldValue" model.formErrors)
+                        |> InputField.withExtraText (InputField.Both "Quantity" "Whole number")
                         |> InputField.toHtml
                     ]
                 , Html.div
@@ -710,6 +753,10 @@ view model =
                         [ Element.viewErrorRow "First validation message"
                         , Element.viewErrorRow "Second validation message"
                         ]
+                    , Html.h3
+                        [ HA.class "text-lg" ]
+                        [ Html.text "ErrorUI.withStandaloneField" ]
+                    , ErrorUI.withStandaloneField [ "Standalone field error", "Second standalone message" ]
                     ]
                 , Html.div
                     [ HA.class "flex flex-col gap-2" ]
@@ -935,6 +982,30 @@ view model =
                         ]
                     ]
                 , Html.div
+                    [ HA.class "flex flex-col gap-2 max-w-xl" ]
+                    [ Html.h3
+                        [ HA.class "text-lg" ]
+                        [ Html.text "Accordion" ]
+                    , Element.accordion
+                        { title = "Shipping details"
+                        , content =
+                            Html.p
+                                [ HA.class "text-sm text-gray-600" ]
+                                [ Html.text "Open by default. The header toggles this panel." ]
+                        , isOpen = model.demoAccordionOpen
+                        , onToggle = ToggleDemoAccordion
+                        }
+                    , Element.accordion
+                        { title = "Billing details"
+                        , content =
+                            Html.p
+                                [ HA.class "text-sm text-gray-600" ]
+                                [ Html.text "Closed by default." ]
+                        , isOpen = model.demoAccordion2Open
+                        , onToggle = ToggleDemoAccordion2
+                        }
+                    ]
+                , Html.div
                     [ HA.class "flex flex-col gap-2" ]
                     [ Html.h3
                         [ HA.class "text-lg" ]
@@ -1126,6 +1197,9 @@ view model =
                     ]
                 , iconGridSection "Html · stroke / size"
                     [ ( "Icon.warning", Icon.warning "" Icon.Medium )
+                    , ( "Icon.lock", Icon.lock "" Icon.Medium )
+                    , ( "Icon.trendUp", Icon.trendUp "" Icon.Medium )
+                    , ( "Icon.trendDown", Icon.trendDown "" Icon.Medium )
                     , ( "Icon.business", Icon.business "" Icon.Medium )
                     , ( "Icon.chat", Icon.chat "" Icon.Medium )
                     , ( "Icon.infoCircle", Icon.infoCircle "" Icon.Medium )
@@ -1145,7 +1219,6 @@ view model =
                     , ( "Icon.arrowUp", Icon.arrowUp )
                     , ( "Icon.arrowLeft", Icon.arrowLeft )
                     , ( "Icon.arrowBack", Icon.arrowBack )
-                    , ( "Icon.defaultUser", Icon.defaultUser )
                     ]
                 , iconGridSection "Svg · fill string"
                     [ ( "Icon.calendar", Icon.calendar "" )
@@ -1162,12 +1235,13 @@ view model =
                     , ( "Icon.expand", Icon.expand "" )
                     , ( "Icon.reload", Icon.reload "" )
                     , ( "Icon.pin", Icon.pin "" )
+                    ]
+                , iconGridSection "Svg · fill (or stroke) and size"
+                    [ ( "Icon.defaultUser", Icon.defaultUser "" Icon.Medium )
                     , ( "Icon.bell", Icon.bell "" Icon.Medium )
                     , ( "Icon.at", Icon.at "" Icon.Medium )
                     , ( "Icon.file", Icon.file "" Icon.Medium )
-                    ]
-                , iconGridSection "Svg · fill (or stroke) and size"
-                    [ ( "Icon.assessment", Icon.assessment "" Icon.Medium )
+                    , ( "Icon.assessment", Icon.assessment "" Icon.Medium )
                     , ( "Icon.check", Icon.check "" Icon.Medium )
                     , ( "Icon.switch", Icon.switch "" Icon.Medium )
                     , ( "Icon.pencilOnPaper", Icon.pencilOnPaper "" Icon.Medium )

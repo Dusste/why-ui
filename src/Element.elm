@@ -1451,11 +1451,11 @@ accordion args =
     Html.div
         [ HA.class "flex flex-col gap-2" ]
         [ Html.div
-            [ HA.class "flex justify-between items-center gap-2" ]
+            [ HA.class "flex justify-between items-center gap-2 cursor-pointer"
+            , HE.onClick args.onToggle
+            ]
             [ Html.h5
-                [ HA.class "text-lg font-semibold"
-                , HE.onClick args.onToggle
-                ]
+                [ HA.class "text-lg font-semibold" ]
                 [ Html.text args.title ]
             , if args.isOpen then
                 Icon.arrowUp
@@ -1463,7 +1463,8 @@ accordion args =
               else
                 Icon.arrowDown
             ]
-        , Html.div
-            [ HA.class "flex flex-col gap-2" ]
-            [ args.content ]
+        , Html.Extra.viewIf args.isOpen <|
+            Html.div
+                [ HA.class "flex flex-col gap-2" ]
+                [ args.content ]
         ]

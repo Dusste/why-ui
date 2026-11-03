@@ -2,6 +2,8 @@
 
 Elm UI primitives for forms and dashboards, styled with **Tailwind CSS**. Components use familiar patterns (phantom builder for buttons, record-based configs for larger widgets) and ship with a single demo page that exercises every module.
 
+Live demo: https://dusste.github.io/why-ui/
+
 ## What’s included
 
 | Area | Module | Notes |
